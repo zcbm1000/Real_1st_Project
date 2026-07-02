@@ -1,0 +1,13 @@
+train: ../train/images
+val: ../valid/images
+test: ../test/images
+
+nc: 4
+names: ['Fire', 'Smoke', 'fire', 'smoke']
+
+roboflow:
+  workspace: -r59va
+  project: wildfire-told0
+  version: dataset
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/-r59va/wildfire-told0/dataset/dataset
