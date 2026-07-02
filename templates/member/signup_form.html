@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>드론 소방 관제 시스템</title>
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/nav.css">
+  <link rel="stylesheet" href="/static/css/hud.css">
+  <link rel="stylesheet" href="/static/css/auth.css">
+</head>
+<body>
+{% include 'include/nav.html' %}
+
+<main class="auth-page" id="signup-page">
+  <div class="auth-card" id="signup-card">
+    <h1 class="auth-title">사용자 등록</h1>
+    <p class="auth-subtitle">정보를 입력하고 승인을 요청하세요.</p>
+
+    {% if error %}
+    <div class="auth-error show" id="signup-error">{{ error }}</div>
+    {% endif %}
+
+    <form id="signup-form" method="POST" action="/member/signup" novalidate>
+      <!-- ID -->
+      <div class="id-check-row">
+        <div style="position:relative; flex:1;">
+          <span class="input-icon">👤</span>
+          <input class="form-input" type="text" id="mId" name="mId"
+                 placeholder="ID를 입력하세요" required>
+        </div>
+        <button type="button" class="btn btn-outline btn-sm" id="check-id-btn"
+                onclick="checkId()">중복확인</button>
+      </div>
+      <div id="id-check-msg" style="font-size:0.75rem; margin:-8px 0 12px; padding-left:4px;"></div>
+
+      <div class="input-group">
+        <span class="input-icon">🔒</span>
+        <input class="form-input" type="password" id="mPw" name="mPw"
+               placeholder="PW를 입력하세요" required>
+      </div>
+      <div class="input-group">
+        <span class="input-icon">🔒</span>
+        <input class="form-input" type="password" id="mPw2" name="mPw2"
+               placeholder="PW를 다시 입력하세요" required>
+      </div>
+      <div class="input-group">
+        <span class="input-icon">✉️</span>
+        <input class="form-input" type="email" id="mEmail" name="mEmail"
+               placeholder="E-MAIL을 입력하세요" required>
+      </div>
+      <div class="input-group">
+        <span class="input-icon">📞</span>
+        <input class="form-input" type="tel" id="mPhone" name="mPhone"
+               placeholder="PHONE을 입력하세요" required>
+      </div>
+      <!-- 이름 -->
+      <div class="input-group">
+        <span class="input-icon">📋</span>
+        <input class="form-input" type="text" id="mName" name="mName"
+               placeholder="이름을 입력하세요" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="reset" class="btn btn-secondary" id="reset-btn">초기화</button>
+        <button type="submit" class="btn btn-primary" id="signup-submit-btn">승인 요청</button>
+      </div>
+    </form>
+
+    <div class="form-links">
+      <a href="/member/signin_form" class="form-link" id="goto-signin">이미 계정이 있으신가요? 로그인</a>
+    </div>
+  </div>
+</main>
+
+<script>
+let idAvailable = false;
+
+async function checkId() {
+  const mId = document.getElementById('mId').value.trim();
+  const msg  = document.getElementById('id-check-msg');
+  if (!mId) { msg.textContent = 'ID를 먼저 입력해주세요.'; msg.style.color = 'var(--red-bright)'; return; }
+
+  const formData = new FormData();
+  formData.append('mId', mId);
+  const res  = await fetch('/member/check_id', { method: 'POST', body: formData });
+  const data = await res.json();
+  if (data.available) {
+    msg.textContent = '사용 가능한 ID입니다.';
+    msg.style.color = 'var(--success)';
+    idAvailable = true;
+  } else {
+    msg.textContent = '이미 사용 중인 ID입니다.';
+    msg.style.color = 'var(--red-bright)';
+    idAvailable = false;
+  }
+}
+
+document.getElementById('signup-form').addEventListener('submit', function(e) {
+  const pw  = document.getElementById('mPw').value;
+  const pw2 = document.getElementById('mPw2').value;
+  if (pw !== pw2) {
+    e.preventDefault();
+    const err = document.getElementById('signup-error') || document.createElement('div');
+    err.id = 'signup-error';
+    err.className = 'auth-error show';
+    err.textContent = '비밀번호가 일치하지 않습니다.';
+    document.getElementById('signup-form').prepend(err);
+  }
+});
+</script>
+</body>
+</html>

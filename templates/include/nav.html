@@ -1,0 +1,43 @@
+<nav id="main-nav" class="hud-nav">
+  <div class="nav-inner">
+    <a href="/" class="nav-logo" id="nav-logo">
+      <span class="logo-icon">🔥</span>
+      <div class="logo-text">
+        {% include 'include/title.html' %}
+      </div>
+    </a>
+
+    <ul class="nav-menu" id="nav-menu">
+      <li>
+        <a href="/dashboard/monitor" id="nav-monitor"
+          class="nav-link {{ 'active' if '/dashboard/monitor' in request.path else '' }}">
+          실시간 모니터링
+        </a>
+      </li>
+      <li>
+        <a href="/dashboard/history" id="nav-history"
+          class="nav-link {{ 'active' if '/dashboard/history' in request.path else '' }}">
+          통계 분석
+        </a>
+      </li>
+      {% if session.get('signinedMemberRole') == 'admin' %}
+      <li>
+        <a href="/admin/management" id="nav-send-history"
+          class="nav-link {{ 'active' if '/admin/management' in request.path else '' }}">
+          관리자 메뉴
+        </a>
+      </li>
+      {% endif %}
+      <li>
+        <a href="/notice/" id="nav-notice" class="nav-link {{ 'active' if '/notice' in request.path else '' }}">
+          공지사항
+        </a>
+      </li>
+    </ul>
+
+    <button class="nav-hamburger" id="nav-hamburger"
+      onclick="document.getElementById('nav-menu').classList.toggle('open')">
+      ☰
+    </button>
+  </div>
+</nav>
