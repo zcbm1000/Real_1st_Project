@@ -3,6 +3,4 @@
 /dataset_4k
 /runs
 /coco8
-__init__.py
-ai/camera_manager.py
-ai/_init_.py
+/captures

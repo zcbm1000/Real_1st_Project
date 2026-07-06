@@ -7,12 +7,12 @@ import time
 # 모델 경로 (현재 프로젝트 구조에 맞춰 수정)
 MODEL_PATH = 'runs/detect/train-15/weights/best.pt'  # 👈 아까 완료된 train-15 경로로 반영했습니다.
 
-ESP32_URL = "http://192.168.137.104:81/stream"
+ESP32_URL = "http://192.168.137.66:81/stream"
 CONFIDENCE_THRESHOLD = 0.20
 
 # ☀️ 렌즈 밝기 및 대비 설정
-BRIGHTNESS = 0    
-CONTRAST = 1.0      
+BRIGHTNESS = -50    
+CONTRAST = 1.1      
 # =================================================
 
 print("🔥 Fire & Smoke Detection (수동 수집 버전) 시작...")
@@ -29,8 +29,8 @@ cap = cv2.VideoCapture(ESP32_URL)
 if not cap.isOpened():
     print("❌ ESP32 연결 실패!")
     print("   1. ESP32가 WiFi에 잘 연결되어 있는지")
-    print("   2. IP 주소 확인 (192.168.137.245)")
-    print("   3. 브라우저에서 http://192.168.137.104:81/stream 열리는지 테스트")
+    print("   2. IP 주소 확인 (192.168.137.66)")
+    print("   3. 브라우저에서 http://192.168.137.66:81/stream 열리는지 테스트")
     exit()
 
 print("✅ ESP32 카메라 연결 성공!")
@@ -57,7 +57,8 @@ while True:
     annotated_frame = results[0].plot()
 
     # FPS 표시
-    fps = int(1 / (time.time() - start_time)) if 'start_time' in locals() else 0
+    time_diff = time.time() - start_time
+    fps = int(1 / time_diff) if time_diff > 0 else 0
     cv2.putText(annotated_frame, f"FPS: {fps}", (10, 30), 
                 cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 0), 2)
     
@@ -80,6 +81,17 @@ while True:
         # ⭐️ 중요: 박스가 쳐진 annotated_frame이 아니라, 다음 학습(라벨링)에 곧바로 사용할 수 있는 깨끗한 '원본 frame'을 저장합니다.
         cv2.imwrite(filename, frame) 
         print(f"📸 [수동 수집] 애매한 순간 저장 완료! -> {filename}")
+
+    # 👥 [단축키 C] 누르면 불/연기 박스가 포함된 결과 화면 저장 (추가할 부분)
+    if key == ord('c'):
+        os.makedirs("captures", exist_ok=True)
+        
+        # 팀원 공유용임을 알 수 있게 파일명에 _team을 붙였습니다.
+        filename = f"captures/capture_{time.strftime('%Y%m%d_%H%M%S')}_team.jpg"
+        
+        # 원본 frame 대신 박스가 그려진 annotated_frame을 저장합니다.
+        cv2.imwrite(filename, annotated_frame) 
+        print(f"🚀 [팀원 공유용] 불/연기 박스 포함 화면 캡처 완료! -> {filename}")
 
     # 'q' 키로 종료
     if key == ord('q'):
