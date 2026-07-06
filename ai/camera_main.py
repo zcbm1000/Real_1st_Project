@@ -5,7 +5,7 @@ import time
 
 # ====================== 설정 ======================
 # 모델 경로 (현재 프로젝트 구조에 맞춰 수정)
-MODEL_PATH = 'runs/detect/train-15/weights/best.pt'  # 👈 아까 완료된 train-15 경로로 반영했습니다.
+MODEL_PATH = 'runs/detect/train-3/weights/best.pt'  # 👈 아까 완료된 train-3 경로로 반영했습니다.
 
 ESP32_URL = "http://192.168.137.66:81/stream"
 CONFIDENCE_THRESHOLD = 0.20
