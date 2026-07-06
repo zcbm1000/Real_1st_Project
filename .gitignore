@@ -1,2 +1,5 @@
 venv
-.python-version
+claude
+__pycache__
+*.pyc
+.claude

@@ -1,0 +1,28 @@
+{
+    "admin": {
+        "pw": "admin1234",
+        "name": "시스템 관리자",
+        "email": "admin@firecontrol.kr",
+        "phone": "010-1234-5678",
+        "role": "admin",
+        "department": "관제 센터",
+        "district": "전체",
+        "approved": true
+    },
+    "leegoeun": {
+        "pw": "1245",
+        "name": "이고은",
+        "email": "igoeun126@gmail.com",
+        "phone": "010-7895-8552",
+        "role": "user",
+        "approved": true
+    },
+    "qwer": {
+        "pw": "12345",
+        "name": "김대명",
+        "email": "rlaeoaud7018@gmail.com",
+        "phone": "00000000000",
+        "role": "user",
+        "approved": true
+    }
+}

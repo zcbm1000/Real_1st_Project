@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>드론 소방 관제 시스템</title>
+  <link rel="stylesheet" href="/static/css/base.css">
+  <link rel="stylesheet" href="/static/css/nav.css">
+  <link rel="stylesheet" href="/static/css/hud.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+</head>
+<body>
+{% include 'include/nav.html' %}
+
+<div class="admin-wrapper" id="admin-wrapper">
+  <div class="admin-container" id="admin-container">
+    <h1 class="admin-title">ADMIN 승인창</h1>
+
+    <!-- 승인 대기 목록 -->
+    <div class="admin-section" id="pending-section">
+      <div class="admin-section-header">🕐 승인 대기 목록</div>
+      <table class="admin-table" id="pending-table">
+        <thead>
+          <tr>
+            <th>No.</th><th>ID</th><th>이름</th><th>신청일</th><th>상태</th><th>관리</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in pending %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ m.id }}</td>
+            <td>{{ m.name }}</td>
+            <td>{{ m.created_at if m.created_at else '-' }}</td>
+            <td><span class="badge badge-smoke">대기</span></td>
+            <td>
+              <form action="/admin/approve/{{ m.id }}" method="POST" style="display:inline;">
+                <button type="submit" class="action-link" id="approve-{{ m.id }}">승인</button>
+              </form>
+              <span class="action-sep">|</span>
+              <form action="/admin/reject/{{ m.id }}" method="POST" style="display:inline;"
+                    onsubmit="return confirm('{{ m.id }} 회원을 거절 삭제하시겠습니까?')">
+                <button type="submit" class="action-link danger" id="reject-{{ m.id }}">거절</button>
+              </form>
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="6" style="text-align:center; color:var(--text-muted); padding:20px;">
+              승인 대기 중인 회원이 없습니다.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <!-- 대원 목록 -->
+    <div class="admin-section" id="member-section">
+      <div class="admin-section-header">👥 대원 목록</div>
+      <table class="admin-table" id="member-table">
+        <thead>
+          <tr>
+            <th>No.</th><th>ID</th><th>이름</th><th>권한</th><th>관리</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in approved %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ m.id }}</td>
+            <td>{{ m.name }}</td>
+            <td>
+              {% if m.role == 'admin' %}
+                <span class="badge badge-active">관리자</span>
+              {% else %}
+                <span class="badge badge-ok">대원</span>
+              {% endif %}
+            </td>
+            <td>
+              {% if m.role != 'admin' %}
+              <form action="/admin/delete/{{ m.id }}" method="POST" style="display:inline;"
+                    onsubmit="return confirm('{{ m.id }} 회원을 삭제하시겠습니까?')">
+                <button type="submit" class="action-link danger"
+                        id="delete-{{ m.id }}">삭제</button>
+              </form>
+              {% else %}
+              <span style="color:var(--text-dim); font-size:0.78rem;">삭제 불가</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% else %}
+          <tr>
+            <td colspan="5" style="text-align:center; color:var(--text-muted); padding:20px;">
+              승인된 대원이 없습니다.
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>
