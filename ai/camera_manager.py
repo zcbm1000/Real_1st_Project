@@ -5,7 +5,22 @@ import numpy as np
 import threading
 import time
 from datetime import datetime, timedelta
+from ultralytics import YOLO
 from utils.json_manager import load_fire_logs, save_fire_logs, get_next_log_id
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+MODEL_PATH = os.path.join(
+    BASE_DIR,
+    "runs",
+    "detect",
+    "train-3",
+    "weights",
+    "best.pt"
+)
+
+print(MODEL_PATH)
+print(os.path.exists(MODEL_PATH))
 
 camera1 = None
 camera2 = None
@@ -14,18 +29,22 @@ camera_lock1 = threading.Lock()
 camera_lock2 = threading.Lock()
 
 # ── ESP32-CAM 스트리밍 주소 (현장 IP로 수정 필요) ──────
-ESP32_STREAM1_URL = "http://192.168.137.150:81/stream"
-ESP32_STREAM2_URL = "http://192.168.137.26:81/stream"
 
-# ── YOLO 모델 (best.pt 준비 후 주석 해제) ───────────────
-# from ultralytics import YOLO
-# try:
-#     model = YOLO("ai/best.pt")
-#     print("YOLO 모델 로드 성공")
-# except Exception as e:
-#     print("YOLO 모델 로드 실패:", e)
-#     model = None
-model = None
+
+MODEL_PATH = "ai/runs/detect/train-3/weights/best.pt"
+
+ESP32_STREAM1_URL = "http://192.168.137.87:81/stream"
+ESP32_STREAM2_URL = "http://192.168.137.145:81/stream"
+
+# ── YOLO 모델 (best.pt) ───────────────
+CONFIDENCE_THRESHOLD = 0.18
+BRIGHTNESS = -50 
+try:
+    model = YOLO(MODEL_PATH)
+    print("YOLO 로드 성공")
+except Exception as e:
+    print(e)
+    model = None
 
 last_alert_time1 = None
 last_alert_time2 = None
@@ -109,7 +128,7 @@ def get_no_signal_frame():
     return frame
 
 
-def save_fire_log_entry(detected_type, confidence, drone_id="DR-01", location="미상 지역"):
+def save_fire_log_entry(detected_type, confidence, drone_id, location="미상 지역"):
     logs   = load_fire_logs()
     log_id = get_next_log_id()
     logs.append({
@@ -152,7 +171,11 @@ def get_frame(camera_num):
 
         # YOLO 감지
         if model is not None:
-            results = model(frame, verbose=False)
+            results = model(
+                frame,
+                conf=CONFIDENCE_THRESHOLD,
+                verbose=False
+            )
             result = results[0]
 
             is_fire_event = False
@@ -172,7 +195,7 @@ def get_frame(camera_num):
                 else:
                     continue
 
-                if confidence >= 0.5:
+                if confidence >= CONFIDENCE_THRESHOLD:
                     is_fire_event = True
                     max_conf = max(max_conf, confidence)
 
@@ -196,10 +219,12 @@ def get_frame(camera_num):
                 now = datetime.now()
 
                 if last_alert_time is None or now - last_alert_time > timedelta(seconds=5):
+                    drone_id = "DRONE_01" if camera_num == 1 else "DRONE_02"
+
                     save_fire_log_entry(
-                        detected_type,
-                        max_conf,
-                        camera_num   # 몇 번 카메라인지 저장
+                        detected_type=detected_type,
+                        confidence=max_conf,
+                        drone_id=drone_id
                     )
 
                     if camera_num == 1:
@@ -246,7 +271,7 @@ frame_locks = {1: threading.Lock(), 2: threading.Lock()}
 def camera_worker(camera_num, src):
     print(f"[알림] 카메라 {camera_num} 연결 시도 중: {src}")
     while True:
-        cap = cv2.VideoCapture(src, cv2.CAP_FFMPEG)
+        cap = cv2.VideoCapture(src, cv2.CAP_FFMPEG) 
         if cap.isOpened():
             print(f"[성공] 카메라 {camera_num} 연결됨")
             while True:

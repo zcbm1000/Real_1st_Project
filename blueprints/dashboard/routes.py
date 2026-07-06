@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, Response, jsonify, session, redirect, url_for, request
-from ai.camera_manager import get_frame, get_raw_frame, get_shared_frame
+from ai.camera_manager import get_frame, get_raw_frame, get_shared_frame, get_no_signal_frame
 from utils.json_manager import load_fire_logs, save_confirm_log
 from datetime import datetime, timedelta
 import cv2
@@ -10,20 +10,29 @@ dashboard_bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
 
 def generate_frames(camera_num, ai=True):
     import time
+    import cv2
 
     while True:
 
         if ai:
-            frame = get_frame(camera_num)      # AI 영상
+            frame = get_frame(camera_num)
         else:
-            frame = get_raw_frame(camera_num)  # 원본 캠
+            frame = get_raw_frame(camera_num)
+
+        # ✅ 핵심: frame 방어
+        if frame is None:
+            frame = get_no_signal_frame()
 
         try:
-            _, buffer = cv2.imencode(
+            success, buffer = cv2.imencode(
                 ".jpg",
                 frame,
                 [cv2.IMWRITE_JPEG_QUALITY, 80]
             )
+
+            if not success:
+                print("[ERROR] imencode 실패")
+                continue
 
             yield (
                 b"--frame\r\n"
@@ -34,6 +43,9 @@ def generate_frames(camera_num, ai=True):
 
         except Exception as e:
             print("Frame encode error:", e)
+
+            # ✅ 여기서도 반드시 fallback
+            continue
 
         time.sleep(0.05)
 
