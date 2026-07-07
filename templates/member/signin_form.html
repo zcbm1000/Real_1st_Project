@@ -60,8 +60,13 @@ document.getElementById('login-form').addEventListener('submit', async function(
   try {
     const res  = await fetch('/member/signin', { method: 'POST', body: formData });
     const data = await res.json();
+    
     if (data.success) {
-      window.location.href = data.redirect;
+      if (data.redirect === "stay") {
+        location.reload(); 
+      } else {
+        window.location.href = data.redirect;
+      }
     } else {
       errorBox.classList.add('show');
       document.getElementById('mPw').value = '';

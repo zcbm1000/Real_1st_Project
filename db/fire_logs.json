@@ -16154,5 +16154,285 @@
         "location": "미상 지역",
         "status": "확인",
         "message": "연기 감지됨"
+    },
+    {
+        "id": 1610,
+        "time": "2026-07-07 12:15:13",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.26,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1611,
+        "time": "2026-07-07 12:19:55",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.31,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1612,
+        "time": "2026-07-07 12:27:29",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.27,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1613,
+        "time": "2026-07-07 12:31:07",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.25,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1614,
+        "time": "2026-07-07 12:45:46",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.22,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1615,
+        "time": "2026-07-07 12:49:58",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.25,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1616,
+        "time": "2026-07-07 12:51:24",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.24,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1617,
+        "time": "2026-07-07 13:36:26",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.29,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1618,
+        "time": "2026-07-07 13:36:33",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.25,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1619,
+        "time": "2026-07-07 13:47:48",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.25,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1620,
+        "time": "2026-07-07 13:47:53",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.2,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1621,
+        "time": "2026-07-07 13:47:58",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.24,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1622,
+        "time": "2026-07-07 13:48:03",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.27,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1623,
+        "time": "2026-07-07 13:48:08",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.3,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1624,
+        "time": "2026-07-07 13:49:31",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.24,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1625,
+        "time": "2026-07-07 14:02:33",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.24,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1626,
+        "time": "2026-07-07 14:02:57",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.22,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1627,
+        "time": "2026-07-07 14:03:33",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.21,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1628,
+        "time": "2026-07-07 14:03:43",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.25,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1629,
+        "time": "2026-07-07 14:04:00",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.26,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1630,
+        "time": "2026-07-07 14:04:26",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.22,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1631,
+        "time": "2026-07-07 14:04:45",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.21,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1632,
+        "time": "2026-07-07 14:05:51",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.26,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1633,
+        "time": "2026-07-07 14:05:57",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.27,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1634,
+        "time": "2026-07-07 14:06:15",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.21,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1635,
+        "time": "2026-07-07 14:06:35",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.24,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1636,
+        "time": "2026-07-07 14:06:43",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.24,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1637,
+        "time": "2026-07-07 14:06:49",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.41,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
     }
 ]

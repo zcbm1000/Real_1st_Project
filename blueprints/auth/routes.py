@@ -36,7 +36,7 @@ def signin():
         return jsonify({"success": True, "redirect": "/?pending=1"})
 
     if member.get("role") == "admin":
-        return jsonify({"success": True, "redirect": url_for("admin.members")})
+        return jsonify({"success": True, "redirect": "stay"})
 
     return jsonify({"success": True, "redirect": "/"})
 
