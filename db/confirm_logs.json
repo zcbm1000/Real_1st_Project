@@ -558,5 +558,25 @@
         "fire_time": "2026-07-06 16:15:46",
         "confirmed_by": "시스템 관리자",
         "id": 56
+    },
+    {
+        "action": "확인",
+        "confirmed_at": "2026-07-07 09:06:09",
+        "drone_id": "DRONE_01",
+        "fire_type": "화재",
+        "location": "미상 지역",
+        "fire_time": "2026-07-06 16:22:04",
+        "confirmed_by": "시스템 관리자",
+        "id": 57
+    },
+    {
+        "action": "확인",
+        "confirmed_at": "2026-07-07 09:08:07",
+        "drone_id": "DRONE_01",
+        "fire_type": "연기",
+        "location": "미상 지역",
+        "fire_time": "2026-07-07 09:07:59",
+        "confirmed_by": "시스템 관리자",
+        "id": 58
     }
 ]
