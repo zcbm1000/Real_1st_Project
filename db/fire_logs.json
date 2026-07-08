@@ -17514,5 +17514,15 @@
         "location": "미상 지역",
         "status": "확인",
         "message": "연기 감지됨"
+    },
+    {
+        "id": 1746,
+        "time": "2026-07-08 16:31:12",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.2,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
     }
 ]
