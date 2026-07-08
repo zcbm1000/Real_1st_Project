@@ -8,7 +8,9 @@ from blueprints.dashboard.routes import dashboard_bp
 from blueprints.admin.routes import admin_bp
 from blueprints.notice.routes import notice_bp
 from ai.camera_manager import init_camera , camera_worker
-from utils.json_manager import load_members, load_fire_logs, load_notices
+from utils.json_manager import load_members
+from utils.fire_Json_manager import load_fire_logs
+from utils.notices_Json_manager import load_notices
 
 app = Flask(__name__)
 app.secret_key = "fire-control-project-2024"

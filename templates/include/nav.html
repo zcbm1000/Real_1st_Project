@@ -20,14 +20,6 @@
           통계 분석
         </a>
       </li>
-      {% if session.get('signinedMemberRole') == 'admin' %}
-      <li>
-        <a href="/admin/management" id="nav-send-history"
-          class="nav-link {{ 'active' if '/admin/management' in request.path else '' }}">
-          관리자 메뉴
-        </a>
-      </li>
-      {% endif %}
       <li>
         <a href="/notice/" id="nav-notice" class="nav-link {{ 'active' if '/notice' in request.path else '' }}">
           공지사항

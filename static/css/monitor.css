@@ -437,7 +437,7 @@
 .map-drone-marker img {
   width: 100%;
   height: auto;
-  max-width: 650px; /* 이 값을 원하시는 만큼 늘리세요 */
+  max-width: 750px; /* 이 값을 원하시는 만큼 늘리세요 */
   display: block;
 }
 

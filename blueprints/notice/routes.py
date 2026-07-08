@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, url_for, session
-from utils.json_manager import load_notices
+from utils.notices_Json_manager import load_notices
 
 notice_bp = Blueprint("notice", __name__, url_prefix="/notice")
 

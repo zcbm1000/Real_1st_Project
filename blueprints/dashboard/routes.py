@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, Response, jsonify, session, redirect, url_for, request
 from ai.camera_manager import get_frame, get_raw_frame, get_shared_frame, get_no_signal_frame
-from utils.json_manager import load_fire_logs, save_confirm_log
+from utils.fire_Json_manager import load_fire_logs
 from datetime import datetime, timedelta
 import cv2
 import requests
@@ -74,31 +74,27 @@ def camera_feed(camera_num):
 def monitor():
     return render_template("dashboard/monitor.html")
 
-
 @dashboard_bp.route("/history")
 def history():
     return render_template("dashboard/history.html")
 
-
-@dashboard_bp.route("/send_history")
-def send_history():
-    """발송 이력 — 관리자 전용 (app.py check_auth에서 /admin/ 경로와 별도로 여기서 role 체크)"""
-    from flask import session as flask_session
-    if flask_session.get("signinedMemberRole") != "admin":
-        return redirect(url_for("auth.signin_form"))
-    from utils.json_manager import load_sms_logs
-    logs = load_sms_logs()
-    return render_template("dashboard/send_history.html", logs=logs)
-
-
 @dashboard_bp.route("/log_detail/<int:log_id>")
 def log_detail(log_id):
-    logs   = load_fire_logs()
-    log    = next((l for l in logs if l.get("id") == log_id), None)
-    if not log:
-        return redirect(url_for("dashboard.history"))
-    return render_template("dashboard/log_detail.html", log=log)
+    logs = load_fire_logs()
 
+    target_log = None
+    for log in logs:
+        if log.get("id") == log_id:
+            target_log = log
+            break
+
+    if target_log is None:
+        return "로그를 찾을 수 없습니다.", 404
+
+    return render_template(
+        "dashboard/log_detail.html",
+        log=target_log
+    )
 
 # ── API ──────────────────────────────────────────────
 @dashboard_bp.route("/api/logs")
@@ -163,37 +159,7 @@ def api_stats():
     })
 
 
-# ── 로그 확인 이력 저장 ──────────────────────────────
-@dashboard_bp.route("/api/confirm_log", methods=["POST"])
-def api_confirm_log():
-    """
-    실시간 관제 화면에서 사이렌 버튼 클릭 → '확인' 또는 '알림 발송' 시 호출.
-    확인한 사람과 해당 화재 로그 정보를 confirm_logs.json에 저장.
-    """
-    data = request.get_json() or {}
-
-    entry = {
-        "action":       data.get("action", "확인"),        # "확인" 또는 "알림발송"
-        "confirmed_at": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-        "drone_id":     data.get("drone_id",  "-"),
-        "fire_type":    data.get("fire_type", "-"),        # "화재" 또는 "연기"
-        "location":     data.get("location",  "-"),
-        "fire_time":    data.get("fire_time", "-"),        # 화재 발생 시각
-        "confirmed_by": session.get("signinedMemberName", "알 수 없음"),
-    }
-
-    save_confirm_log(entry)
-    return jsonify({"success": True})
-
-
-# ── SMS / Discord 전송 뼈대 ──────────────────────────
-@dashboard_bp.route("/api/send_sms", methods=["POST"])
-def api_send_sms():
-    log_id = request.json.get("log_id")
-    # 실제 SMS 발송 로직 연결 예정
-    return jsonify({"success": True, "message": f"SMS 전송 완료 (Log #{log_id})"})
-
-
+# ── Discord 전송 뼈대 ──────────────────────────
 @dashboard_bp.route("/api/send_discord", methods=["POST"])
 def api_send_discord():
     WEBHOOK_URL = "https://discordapp.com/api/webhooks/1521402162247110708/dosKCCC0mVLCe0mbeVTCExC5W7HxyZaP8nEv8qAPNTNXbmIgGUQdKpBaruQ_Ig5b08Wl"

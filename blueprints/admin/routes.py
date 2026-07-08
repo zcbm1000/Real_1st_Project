@@ -1,8 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for, jsonify
-from utils.json_manager import (
-    load_members, save_members, load_notices, save_notices,
-    get_next_notice_id, load_sms_logs, save_sms_log, load_confirm_logs
-)
+from utils.json_manager import load_members, save_members
+from utils.notices_Json_manager import load_notices, save_notices,get_next_notice_id
+
 
 admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
@@ -38,55 +37,10 @@ def management():
         if d not in district_order:
             ordered_districts.append((d, members_list))
 
-    # 발송 이력
-    sms_logs = load_sms_logs()
-    sms_logs_sorted = sorted(sms_logs, key=lambda x: x.get("sent_at", ""), reverse=True)
-
-    # 로그 확인 이력
-    confirm_logs = load_confirm_logs()
-    confirm_logs_sorted = sorted(confirm_logs, key=lambda x: x.get("confirmed_at", ""), reverse=True)
-
     return render_template(
         "admin/management.html",
         ordered_districts=ordered_districts,
-        sms_logs=sms_logs_sorted,
-        confirm_logs=confirm_logs_sorted,
     )
-
-
-@admin_bp.route("/api/confirm_sms/<int:log_id>", methods=["POST"])
-def confirm_sms(log_id):
-    """발송 이력 확인 토글 API"""
-    check = require_admin()
-    if check:
-        return jsonify({"error": "unauthorized"}), 403
-
-    from datetime import datetime
-    import os, json
-
-    sms_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "db", "sms_logs.json")
-    try:
-        with open(sms_file, "r", encoding="utf-8") as f:
-            logs = json.load(f)
-    except Exception:
-        logs = []
-
-    now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    for log in logs:
-        if log.get("id") == log_id:
-            if log.get("confirmed"):
-                log["confirmed"] = False
-                log["confirmed_at"] = None
-            else:
-                log["confirmed"] = True
-                log["confirmed_at"] = now_str
-            break
-
-    with open(sms_file, "w", encoding="utf-8") as f:
-        json.dump(logs, f, ensure_ascii=False, indent=4)
-
-    return jsonify({"success": True, "confirmed": log.get("confirmed"), "confirmed_at": log.get("confirmed_at")})
-
 
 @admin_bp.route("/members")
 def members():
