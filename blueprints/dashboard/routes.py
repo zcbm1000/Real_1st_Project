@@ -4,13 +4,12 @@ from utils.fire_Json_manager import load_fire_logs
 from datetime import datetime, timedelta
 import cv2
 import requests
+import time
 
 dashboard_bp = Blueprint("dashboard", __name__, url_prefix="/dashboard")
 
 
 def generate_frames(camera_num, ai=True):
-    import time
-    import cv2
 
     while True:
 
@@ -19,7 +18,6 @@ def generate_frames(camera_num, ai=True):
         else:
             frame = get_raw_frame(camera_num)
 
-        # ✅ 핵심: frame 방어
         if frame is None:
             frame = get_no_signal_frame()
 
@@ -43,8 +41,6 @@ def generate_frames(camera_num, ai=True):
 
         except Exception as e:
             print("Frame encode error:", e)
-
-            # ✅ 여기서도 반드시 fallback
             continue
 
         time.sleep(0.05)
@@ -60,7 +56,6 @@ def video_feed(camera_num):
 
 @dashboard_bp.route("/camera_feed/<int:camera_num>")
 def camera_feed(camera_num):
-    # 원본 캠(ESP32) 전용 스트리밍
     def generate():
         while True:
             frame = get_shared_frame(camera_num)

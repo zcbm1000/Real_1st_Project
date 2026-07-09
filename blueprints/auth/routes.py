@@ -8,7 +8,7 @@ import smtplib
 
 auth_bp = Blueprint("auth", __name__, url_prefix="/member")
 
-
+# 로그인 START
 @auth_bp.route("/signin_form")
 def signin_form():
     if session.get("signinedMemberId"):
@@ -18,7 +18,6 @@ def signin_form():
 
 @auth_bp.route("/signin", methods=["POST"])
 def signin():
-    """AJAX 로그인 처리 — JSON 응답"""
     m_id = request.form.get("mId", "").strip()
     m_pw = request.form.get("mPw", "").strip()
 
