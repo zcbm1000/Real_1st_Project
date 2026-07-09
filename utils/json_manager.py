@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 MEMBER_FILE       = os.path.join(BASE_DIR, "db", "members.json")
 
 # ── Members ──────────────────────────────────────
-def load_members(): # 멤버 제이슨 로그 불러오는 함수
+def load_members(): # 멤버 제이슨 로그 불러오는 함수 
     try:
         if not os.path.exists(MEMBER_FILE):
             return {}
