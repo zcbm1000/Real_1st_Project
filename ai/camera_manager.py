@@ -34,7 +34,7 @@ camera_lock2 = threading.Lock()
 MODEL_PATH = "ai/runs/detect/train-3/weights/best.pt"
 
 ESP32_STREAM1_URL = "http://192.168.137.251:81/stream"
-ESP32_STREAM2_URL = "http://192.168.137.53:81/stream"
+ESP32_STREAM2_URL = "http://192.168.137.193:81/stream"
 
 # ── YOLO 모델 (best.pt) ───────────────
 CONFIDENCE_THRESHOLD = 0.18

@@ -74,15 +74,24 @@
 </main>
 
 <script>
+  // 아이디 중복체크 변수
 let idAvailable = false;
 
 async function checkId() {
+  // 사용자가 입력한 id를 가져옴
+  // trim() 양끝에 있는 공백제거 해주는 함수
   const mId = document.getElementById('mId').value.trim();
+  // 화면에서 중복결과 확인결과를 보여주는 메세지창
   const msg  = document.getElementById('id-check-msg');
+  // id 공백일경우 다음 단계를 실행하지않고 여기서 멈춤
   if (!mId) { msg.textContent = 'ID를 먼저 입력해주세요.'; msg.style.color = 'var(--red-bright)'; return; }
 
+  // 빈 데이터 생성
   const formData = new FormData();
+  
+  // 사용자가 입력한 값을 formData 안에 mId라는 이름표를 붙어서 넣음
   formData.append('mId', mId);
+  //  
   const res  = await fetch('/member/check_id', { method: 'POST', body: formData });
   const data = await res.json();
   if (data.available) {

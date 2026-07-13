@@ -17544,5 +17544,25 @@
         "location": "미상 지역",
         "status": "확인",
         "message": "연기 감지됨"
+    },
+    {
+        "id": 1749,
+        "time": "2026-07-13 09:18:29",
+        "drone_id": "DRONE_02",
+        "type": "연기",
+        "confidence": 0.22,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "연기 감지됨"
+    },
+    {
+        "id": 1750,
+        "time": "2026-07-13 09:19:10",
+        "drone_id": "DRONE_02",
+        "type": "화재",
+        "confidence": 0.48,
+        "location": "미상 지역",
+        "status": "확인",
+        "message": "화재 감지됨"
     }
 ]

@@ -52,26 +52,42 @@
 
 <script>
 document.getElementById('login-form').addEventListener('submit', async function(e) {
+  // 폼이 제출될시 브러우저가 화면을 새로고침 동작을 막는 함수
+  // submit 가 붙어잇는 폼 태그가르킴
   e.preventDefault();
+  // html에서 id가 login-error 인 
+  // 값을찾아 변수명에 담고 show 라는 이름표를 없애는 작업
+  // css에 show 값이 있을경우 로그인 버튼을 누르면 호출후 메세지를 숨김
+  // remove(): 지정한 값을 찾아 삭제할때 쓰는 함수
   const errorBox = document.getElementById('login-error');
   errorBox.classList.remove('show');
 
+  // 웹페이지의 입력창에 적힌 모든 내용을 한꺼번에 수집해서 담는 역할
   const formData = new FormData(this);
   try {
+    // 해당 member/signin 에 정보를 제출
     const res  = await fetch('/member/signin', { method: 'POST', body: formData });
+    // 최종데이터(성공여부, 이동할주소 등등)가 담김
     const data = await res.json();
     
     if (data.success) {
+      // 로그인 성공시
       if (data.redirect === "stay") {
+        // stay 라는 응답을 받을시 현재 페이지를 새로고침 하는 함수
         location.reload(); 
       } else {
+          // 해당 페이지로 이동
         window.location.href = data.redirect;
       }
-    } else {
+    } else { // 로그인 실패시
+      // 로그인 실패 문구 확인
+      // focus() 특정 입력칸을 사용자가 바로 입력할수있게 하는 함수
       errorBox.classList.add('show');
       document.getElementById('mPw').value = '';
       document.getElementById('mPw').focus();
     }
+
+    // 통신자체가 실패했을시 에러 메세지 확인
   } catch(err) {
     errorBox.classList.add('show');
   }
