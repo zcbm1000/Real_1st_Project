@@ -7,47 +7,19 @@ admin_bp = Blueprint("admin", __name__, url_prefix="/admin")
 
 
 def require_admin():
+    # 현재 로그인한 정보가 admin이 아니라면 해당 주소로 보냄
     if session.get("signinedMemberRole") != "admin":
         return redirect(url_for("auth.signin_form"))
     return None
 
-
-@admin_bp.route("/management")
-def management():
-    """관리자 메뉴 — 사용자 관리 + 발송 이력 통합 페이지"""
-    check = require_admin()
-    if check:
-        return check
-
-    # 사용자 목록 — 구별 그룹핑
-    all_members = load_members()
-    district_order = ["동구", "중구", "서구", "유성구", "대덕구", "전체", "관제 센터"]
-    by_district = {}
-    for mid, info in all_members.items():
-        d = info.get("district", "기타")
-        by_district.setdefault(d, [])
-        by_district[d].append({"id": mid, **info})
-
-    # district_order 기준 정렬, 나머지는 '기타'로
-    ordered_districts = []
-    for d in district_order:
-        if d in by_district:
-            ordered_districts.append((d, by_district[d]))
-    for d, members_list in by_district.items():
-        if d not in district_order:
-            ordered_districts.append((d, members_list))
-
-    return render_template(
-        "admin/management.html",
-        ordered_districts=ordered_districts,
-    )
-
 @admin_bp.route("/members")
 def members():
     check = require_admin()
+    # 관리자인지 아닌지 체크하는 부분
     if check:
         return check
     all_members = load_members()
+    
     pending = [
         {"id": mid, **info}
         for mid, info in all_members.items()

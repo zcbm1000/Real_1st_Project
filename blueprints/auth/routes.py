@@ -102,7 +102,6 @@ def check_id():
     # 중복점검을 함
     m_id    = request.form.get("mId", "").strip()
     members = load_members()
-    # 
     # bool 값을 참(True)이나 거짓(False)으로 바꾸는 도구.
     return jsonify({"available": m_id not in members and bool(m_id)})
 # 회원가입 END
