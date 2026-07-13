@@ -217,10 +217,8 @@ def send_verification():
 
     try:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
-            server.login(
-                os.getenv('EMAIL_ID'),
-                os.getenv('EMAIL_PASSWORD')
-                )
+            # 메일을 전송할 메일과 키값
+            server.login('igoeun126@gmail.com', 'wozx knyf ubix uwmt')
             server.send_message(otpMail)
         return jsonify({"status": "success", "message": "인증번호가 발송되었습니다."})
     except Exception as e:
