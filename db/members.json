@@ -24,5 +24,13 @@
         "phone": "00000000000",
         "role": "user",
         "approved": true
+    },
+    "rudtjswkrl": {
+        "pw": "1234",
+        "name": "임경선",
+        "email": "rudtjs@gmail.com",
+        "phone": "010-4444-5555",
+        "role": "user",
+        "approved": false
     }
 }
